@@ -1,12 +1,31 @@
 radio.onReceivedNumber(function (receivedNumber) {
     if (receivedNumber == 1) {
-        Forward()
+        X = 0
+        for (let index = 0; index < 4; index++) {
+            sensor()
+            if (distance <= 15) {
+                X += 1
+            }
+        }
+        if (X == 4) {
+            Turn_Right()
+            basic.pause(1000)
+            Forward()
+        }
     } else if (receivedNumber == 2) {
-        Backward()
+        Forward()
     } else if (receivedNumber == 3) {
-        Turn_Right()
+        Backward()
     } else if (receivedNumber == 4) {
+        Turn_Right2()
+    } else if (receivedNumber == 5) {
         Turn_Left()
+    } else if (receivedNumber == 6) {
+        stop()
+    } else if (receivedNumber == 7) {
+    	
+    } else if (false) {
+    	
     }
 })
 function Forward () {
@@ -19,9 +38,19 @@ function Turn_Right () {
     pins.servoSetPulse(AnalogPin.P13, 1700)
     control.waitMicros(20000)
 }
+function stop () {
+    pins.servoSetPulse(AnalogPin.P8, 0)
+    pins.servoSetPulse(AnalogPin.P13, 0)
+    control.waitMicros(20000)
+}
 function Turn_Left () {
     pins.servoSetPulse(AnalogPin.P8, 1300)
     pins.servoSetPulse(AnalogPin.P13, 0)
+    control.waitMicros(20000)
+}
+function Turn_Right2 () {
+    pins.servoSetPulse(AnalogPin.P8, 0)
+    pins.servoSetPulse(AnalogPin.P13, 1700)
     control.waitMicros(20000)
 }
 function sensor () {
@@ -43,16 +72,5 @@ basic.showIcon(IconNames.Fabulous)
 distance = 0
 radio.setGroup(7)
 basic.forever(function () {
-    X = 0
-    for (let index = 0; index < 4; index++) {
-        sensor()
-        if (distance <= 15) {
-            X += 1
-        }
-    }
-    if (X == 4) {
-        Turn_Right()
-        basic.pause(100)
-        Forward()
-    }
+	
 })
